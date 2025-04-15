@@ -1,5 +1,9 @@
+require('dotenv').config(); // Importation des modules nécessaires
 const express = require('express');
 const app = express();
+
+// Connexion BDD
+connectDB();
 
 // Middlewares
 app.use(express.json());

@@ -3,6 +3,7 @@
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const Document = require('../../models/Document')
 
 // Création du dossier de destination si besoin
 const uploadDir = path.join(__dirname, '../../../uploads');
@@ -25,7 +26,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage }).single('document');
 
 // Contrôleur principal
-const inputController = (req, res) => {
+const inputController = async (req, res) => {
   upload(req, res, function (err) {
     if (err) {
       console.error(err);
@@ -36,14 +37,26 @@ const inputController = (req, res) => {
       return res.status(400).json({ error: 'Aucun fichier reçu' });
     }
 
-    return res.status(200).json({
-      message: 'Fichier reçu avec succès',
-      data: {
-        originalname: req.file.originalname,
-        filename: req.file.filename,
-        path: req.file.path
-      }
-    });
+  (async () => {
+    try {
+        // Enregistrement en base
+        const newDocument = await Document.create({
+            originalname: req.file.originalname,
+            filename: req.file.filename,
+            path: req.file.path,
+            mimetype: req.file.mimetype,
+            size: req.file.size
+        });
+
+        return res.status(200).json({
+          message: 'Fichier reçu avec succès',
+          document: newDocument
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'Erreur lors de l\'enregistrement en base de données' });
+    }
+  })();
   });
 };
 
