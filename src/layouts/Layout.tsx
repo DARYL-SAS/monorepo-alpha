@@ -7,6 +7,7 @@ const Layout = () => {
             <nav style={{ 
                 width: "10%", 
                 padding: "1%", 
+                marginRight: "1rem",
                 borderRight: "1px solid #ccc", 
                 background: "#f0f0f0", 
                 display: "flex", 
