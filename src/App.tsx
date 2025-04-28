@@ -11,7 +11,7 @@ function App() {
           <Route path="/" element={<div>Hello, World!</div>} />
           <Route path="/chatbot" element={<ChatbotPage />} />
           <Route path="/document" element={<DocumentsPage />} />
-          {/* D'autre route ici */}
+      
         </Route>
       </Routes>
     </Router>

@@ -1,15 +1,40 @@
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
+import './Layout.css';
 
 const Layout = () => {
     return (
-        <div>
-            <nav style={{ padding: "1rem", borderBottom: "1px solid #ccc", background: "#f0f0f0" }}>
-                <Link to="/" style={{ marginRight: "1rem" }}>Home</Link>
-                <Link to="/chatbot" style={{ marginRight: "1rem" }}>Chatbot</Link>
-                <Link to="/document" style={{ marginRight: "1rem" }}>Document</Link>
+        <div style={{ display: "flex", height : "100vh"}}>
+            <nav style={{ 
+                width: "10%", 
+                padding: "1%", 
+                borderRight: "1px solid #ccc", 
+                background: "#f0f0f0", 
+                display: "flex", 
+                flexDirection: "column", 
+                alignItems: "center",
+
+            }}> {/* Main container */}
+
+
+                <NavLink to="/" style={{marginBottom: "2rem" }}>
+                    <img src = "DARYL_transparent.png" alt="Logo" style={{ width: "100px", marginBottom: "1rem" }} />
+                </NavLink>
+                
+                <NavLink 
+                    to="/chatbot" 
+                    className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+                >
+                    Chatbot
+                </NavLink>
+                <NavLink 
+                    to="/document" 
+                    className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+                >
+                    Document
+                </NavLink>
             </nav>
 
-            <main style={{ padding: "1rem" }}>
+            <main className="flex-1 p-4">
                 <Outlet />
             </main>
 
