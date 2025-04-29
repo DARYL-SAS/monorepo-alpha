@@ -107,81 +107,43 @@ const DocumentsPage = () => {
     }, []);
 
     return (
-        <div
-            style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                height: "100vh",
-                width: "100%",
-            }}
-        >
-            <div style={{ 
-                maxWidth: "800px", 
-                margin: "0 auto", 
-                padding: "20px" 
-            }}>
-                <h1 style={{ marginBottom: "20px" }}></h1>
-
+        <div className="flex flex-col items-center justify-center h-screen w-full bg-gray-100">
+            <div className="max-w-3xl mx-auto p-5">
                 <form onSubmit={handleUpload}>
                     <div
                         onClick={() => !file && inputRef.current?.click()}
                         onDrop={handleDrop}
                         onDragOver={handleDragOver}
                         onDragLeave={handleDragLeave}
-                        style={{
-                            border: "2px dashed #d1d5db",
-                            borderRadius: "8px",
-                            padding: "20px",
-                            textAlign: "center",
-                            backgroundColor: isDragOver ? "#e0f2fe" : "#f9fafb",
-                            cursor: file ? "default" : "pointer",
-                            marginBottom: "20px",
-                            transition: "background-color 0.3s",
-                        }}
+                        className={`border-2 border-dashed rounded-lg p-5 text-center transition-colors ${
+                            isDragOver ? "bg-indigo-600" : "bg-white"
+                        } ${file ? "cursor-default" : "cursor-pointer"} mb-5`}
                     >
                         {file ? (
-                            <div style={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                                backgroundColor: "#f3f4f6",
-                                borderRadius: "8px",
-                                padding: "10px 15px",
-                                border: "1px solid #d1d5db"
-                            }}>
-                                <div style={{ display: "flex", alignItems: "center" }}>
-                                    <span style={{ fontSize: "20px", marginRight: "10px", color: "#6b7280" }}>📄</span>
+                            <div className="flex items-center justify-between bg-gray-200 rounded-lg p-3 border border-gray-300">
+                                <div className="flex items-center">
+                                    <span className="text-xl mr-2 text-gray-500">📄</span>
                                     <span>{file.name}</span>
                                 </div>
                                 <button
                                     type="button"
                                     onClick={removeFile}
-                                    style={{
-                                        background: "none",
-                                        border: "none",
-                                        cursor: "pointer",
-                                        padding: "0",
-                                    }}
+                                    className="bg-none border-none cursor-pointer p-0"
                                     aria-label="Retirer le fichier"
                                 >
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" style={{ width: "24px", height: "24px", color: "#9ca3af" }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 text-gray-400">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                                     </svg>
                                 </button>
                             </div>
                         ) : (
                             <>
-                                <div style={{ 
-                                    fontSize: "40px", 
-                                    color: "#9ca3af", 
-                                    marginBottom: "10px" }}>     
-                                </div>
-                                <p style={{ fontSize: "16px" }}>
-                                    Glissez-déposez un fichier ici, ou <span style={{ color: "#3b82f6", textDecoration: "underline" }}>parcourir</span>
+                                <div className="text-4xl text-gray-400 mb-2"> </div>
+                                <p className="text-lg">
+                                    Glissez-déposez un fichier ici, ou {" "}
+                                    <span className="text-blue-500 underline">parcourir</span>
                                 </p>
-                                <p style={{ fontSize: "12px", color: "#6b7280", marginTop: "5px" }}>
+                                <p className="text-sm text-gray-500 mt-1">
                                     PDF, Word, Excel jusqu'à 10MB
                                 </p>
                             </>
@@ -191,25 +153,16 @@ const DocumentsPage = () => {
                     <input
                         type="file"
                         ref={inputRef}
-                        style={{ display: "none" }}
+                        className="hidden"
                         onChange={(e) => setFile(e.target.files?.[0] || null)}
                     />
 
                     <button
                         type="submit"
                         disabled={!file || uploading}
-                        style={{
-                            width: "100%",
-                            padding: "12px 0",
-                            backgroundColor: uploading ? "#9ca3af" : "#2563eb",
-                            color: "#fff",
-                            border: "none",
-                            borderRadius: "8px",
-                            fontSize: "16px",
-                            fontWeight: "bold",
-                            cursor: uploading ? "not-allowed" : "pointer",
-                            marginBottom: "30px",
-                        }}
+                        className={`w-full py-3 text-white font-bold rounded-lg mb-7 ${
+                            uploading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+                        }`}
                     >
                         {uploading ? "Téléversement en cours..." : "Téléverser le document"}
                     </button>
@@ -223,20 +176,12 @@ const DocumentsPage = () => {
                     <ul>
                         {documents.map((doc) => (
                             <li key={doc._id} style={{ marginBottom: "10px" }}>
-                                <a href={`/documents/${doc._id}`} target="_blank" rel="noopener noreferrer">
+                                <a href={`/documents/${doc._id}`} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
                                     {doc.originalName}
                                 </a>
                                 <button
                                     onClick={() => handleDelete(doc._id)}
-                                    style={{
-                                        marginLeft: "10px",
-                                        backgroundColor: "#ef4444",
-                                        color: "#fff",
-                                        border: "none",
-                                        padding: "5px 10px",
-                                        borderRadius: "5px",
-                                        cursor: "pointer",
-                                    }}
+                                    className="ml-3 bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
                                 >
                                     Supprimer
                                 </button>

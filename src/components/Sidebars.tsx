@@ -6,7 +6,7 @@ interface SidebarContextType {
   expanded: boolean;
 }
 
-const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
+export const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
 
 interface SidebarProps {
   children: React.ReactNode;
@@ -16,15 +16,15 @@ export default function Sidebar({ children }: SidebarProps) {
   const [expanded, setExpanded] = useState(true);
 
   return (
-    <aside className="h-screen overflow-hidden">
-      <nav className="h-full inline-flex flex-col bg-white border-r shadow-sm">
+    <aside className="h-screen overflow-hidden z-20 relative">
+      <nav className={`h-full inline-flex flex-col bg-white border-r shadow-sm transition-all duration-300 ${expanded ? "w-52" : "w-16"}`}>
 
         {/* Logo and toggle button for sidebar expansion */}
         <div className="p-4 pb-2 flex justify-between items-center">
           <img
-            src="https://img.logoipsum.com/243.svg"
+            src="./logo_horizontale.png"
             className={`overflow-hidden transition-all ${
-              expanded ? "w-32" : "w-0"
+              expanded ? "opacity-100" : "opacity-0"
             }`}
             alt=""
           />
@@ -92,7 +92,10 @@ export function SidebarItem({ to, icon, text, active, alert }: SidebarItemProps)
         }`
       }
     >
-      {icon}
+      <div className="w-6 h-6 flex items-center justify-center">
+        {icon}
+      </div>
+      
       <span
         className={`overflow-hidden transition-all ${
           expanded ? "w-52 ml-3" : "w-0"
