@@ -39,7 +39,7 @@ export default function Sidebar({ children }: SidebarProps) {
 
         {/* Sidebar items */}
         <SidebarContext.Provider value={{ expanded, setExpanded }}>
-          <ul className="flex-1 px-3 overflow-y-auto overflow-x-hidden">
+          <ul className="flex-1 px-3 overflow-y-auto overflow-x-hidden transition-all duration-300">
             {children}
           </ul>
         </SidebarContext.Provider>

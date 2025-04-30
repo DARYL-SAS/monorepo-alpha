@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ChatbotQueryInput, ChatbotQueryResponse } from '../types/chatbot.ts'; 
+import { ChatbotQueryInput, ChatbotQueryResponse } from '../types/chatbot.ts';
+import {SendHorizontal} from 'lucide-react';
 
 const ChatbotPage = () => {
     const [prompt, setPrompt] = useState('');
     const [response, setResponse] = useState<ChatbotQueryResponse | null>(null);
     const [loading, setLoading] = useState(false);
     const [messages, setMessages] = useState<{ type: "user" | "bot"; content: string }[]>([]);
+    const [hasFocusedOnce, setHasFocusedOnce] = useState(false); // Pour éviter le focus immédiat sur le textarea
 
     const messagesContainerRef = useRef<HTMLDivElement>(null);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -17,6 +19,16 @@ const ChatbotPage = () => {
             container.scrollTop = container.scrollHeight;
         }
     }, [messages]);
+
+
+    useEffect(() => {
+        // Focus sur le textarea après le premier message
+        if (hasFocusedOnce) {
+            textareaRef.current?.focus();
+        }
+    }, [messages]);
+    
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -72,8 +84,14 @@ const ChatbotPage = () => {
     };
 
     return (
-        <div className='flex flex-col items-center justify-center min-h-screen p-6 bg-gray-50'>
-            <div className="w-full max-w-lg h-[80vh] flex flex-col bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+        <div className='w-full flex flex-col items-center justify-center pb-4 px-6 min-h-screen bg-gray-50'>
+            <div 
+                className="w-full h-[80vh] flex flex-col"
+                onClick={() => {
+                    if (!hasFocusedOnce) setHasFocusedOnce(true);
+                    textareaRef.current?.focus();
+                }}
+                >
 
                 {/* Boîte de messages */}
                 <div
@@ -102,29 +120,38 @@ const ChatbotPage = () => {
 
                 {/* Formulaire d'envoi de message */}
                 <form onSubmit={handleSubmit} className="flex space-x-2 w-full">
-                    <textarea
-                    ref={textareaRef}
-                        rows={1}
-                        placeholder="Pose ta question..."
-                        value={prompt}
-                        onChange={(e) => setPrompt(e.target.value)}
-                        onKeyDown={handleKeyDown}
-                        disabled={loading}
-                        className="w-full p-4 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-800 resize-none overflow-hidden disabled:opacity-50"
-                    />
-                    <button 
-                        type="submit" 
-                        disabled={loading}
-                        className="py-2 px-6 bg-indigo-600 text-gray-100 font-semibold rounded-lg shadow-md 
-                            hover:bg-indigo-700 
-                            focus:outline-none focus:ring-2 focus:ring-indigo-500 
-                            disabled:bg-gray-400 disabled:cursor-not-allowed transition duration-200"
-                    >
-                        Envoyer
-                    </button>
+                    <div className="relative w-full flex items-center">
+                        <textarea
+                        ref={textareaRef}
+                            rows={1}
+                            placeholder="Poser une question..."
+                            value={prompt}
+                            onChange={(e) => setPrompt(e.target.value)}
+                            onKeyDown={handleKeyDown}
+                            onBlur={() => {
+                                if (hasFocusedOnce) {
+                                    setTimeout(() => {
+                                        textareaRef.current?.focus();
+                                    }, 0);
+                                }
+                            }}
+                            disabled={loading}
+                            className="w-full pb-6 p-4 pr-16 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-800 resize-none overflow-hidden disabled:opacity-50"
+                        
+                        />
+                        <button 
+                            type="submit" 
+                            disabled={loading}
+                            className="absolute right-2 py-1 px-3 text-indigo-600 font-semibold 
+                                disabled:bg-gray-400 disabled:cursor-not-allowed transition duration-200"
+                        >
+                        <SendHorizontal className="inline-block" />     
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
+        
     )
 }
 
