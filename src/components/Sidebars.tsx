@@ -2,8 +2,9 @@ import { ChevronLast, ChevronFirst} from "lucide-react";
 import { useContext, createContext, useState } from "react";
 import {NavLink} from "react-router-dom";
 
-interface SidebarContextType {
+export interface SidebarContextType {
   expanded: boolean;
+  setExpanded: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
@@ -37,7 +38,7 @@ export default function Sidebar({ children }: SidebarProps) {
         </div>
 
         {/* Sidebar items */}
-        <SidebarContext.Provider value={{ expanded }}>
+        <SidebarContext.Provider value={{ expanded, setExpanded }}>
           <ul className="flex-1 px-3 overflow-y-auto overflow-x-hidden">
             {children}
           </ul>
