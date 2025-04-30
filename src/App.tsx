@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { BookText, BotMessageSquare } from "lucide-react";
 
@@ -9,6 +9,7 @@ import DocumentsPage from "./pages/DocumentsPage";
 /* Components */
 import Topbar from "@components/Topbar";
 import Sidebar, {SidebarContext, SidebarItem} from "@components/Sidebars";
+import SplashScreen from "@components/SplashScreen";
 
 const HomePage = () => {
   return (
@@ -21,6 +22,14 @@ const HomePage = () => {
 
 const App: React.FC = () => {
   const [expanded, setExpanded] = useState(true);
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowSplash(false), 2500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (showSplash) return <SplashScreen />;
 
   return (
     <Router>

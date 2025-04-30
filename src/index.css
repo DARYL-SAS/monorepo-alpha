@@ -2,8 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-hatml, body, #root {
+html, body, #root {
   height: 100%;
   margin: 0;
   overflow: hidden;
+}
+
+@keyframes wave-effect {
+  0%   { transform: translateX(-50%); }
+  25%  { transform: translateX(50%); }
+  50%  { transform: translateX(-50%) rotateZ(-180deg); }
+  75%  { transform: rotateZ(90deg); }
+  100% { transform: rotateZ(0deg); }
+}
+
+.animate-wave-effect {
+  animation: wave-effect 2.5s infinite ease-in-out;
 }

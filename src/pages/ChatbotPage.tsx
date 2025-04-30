@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ChatbotQueryInput, ChatbotQueryResponse } from '../types/chatbot.ts';
 import {SendHorizontal} from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const ChatbotPage = () => {
     const [prompt, setPrompt] = useState('');
@@ -84,7 +85,7 @@ const ChatbotPage = () => {
     };
 
     return (
-        <div className='w-full flex flex-col items-center justify-center pb-4 px-6 min-h-screen bg-gray-50'>
+        <div className='w-full flex flex-col items-center justify-center pb-4 px-6 min-h-screen bg-gray-100'>
             <div 
                 className="w-full h-[80vh] flex flex-col"
                 onClick={() => {
@@ -98,24 +99,49 @@ const ChatbotPage = () => {
                     ref={messagesContainerRef}
                     className="flex-1 overflow-y-auto mb-4 px-4 py-4 space-y-4"
                 >
-                    {messages.map((msg, idx) => (
-                        <div
-                            key={idx}
-                            className={`flex ${msg.type === "user" ? 'justify-end' : 'justify-start'}`}
-                        >
-                            <div
-                                className={`max-w-xs p-3 rounded-lg ${
-                                    msg.type === 'user' 
-                                        ? 'bg-indigo-500 text-gray-100' 
-                                        : msg.content === "..." 
-                                            ? 'bg-gray-200 text-gray-700 animate-pulse' 
-                                            : 'bg-gray-100 text-gray-800'
-                                }`}
+                    <AnimatePresence mode="wait">
+                        {messages.length === 0 ? (
+                            <motion.div
+                            key="welcome"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.5 }}
+                            className="flex flex-col text-center items-center justify-center text-gray-500"
                             >
-                                {msg.content === "..." ? "Le bot est en train de répondre..." : msg.content}
-                            </div>
-                        </div>
-                    ))}
+                            <h2 className="text-3xl font-semibold mb-2">Bonjour</h2>
+                            <h2 className="text-3xl font-semibold mb-2 pb-12">je suis Daryl</h2>
+                            <img src="./logo_sans_texte.png" alt="Logo" className="items-center w-[20vh] h-auto pb-12" />
+                            <h2 className="text-3xl font-semibold mb-2">Comment puis-je vous aider</h2> 
+                            </motion.div>
+                        ) : (
+                            <motion.div
+                            key="messages"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="flex flex-col space-y-4"
+                            >
+                            {messages.map((msg, idx) => (
+                                <div
+                                key={idx}
+                                className={`flex ${msg.type === "user" ? 'justify-end' : 'justify-start'}`}
+                                >
+                                <div
+                                    className={`max-w-[60%] p-3 rounded-lg break-words whitespace-pre-wrap ${
+                                    msg.type === 'user' 
+                                        ? 'bg-indigo-700 text-indigo-100' 
+                                        : msg.content === "..." 
+                                        ? 'bg-gray-200 text-gray-700 animate-pulse' 
+                                        : 'bg-gray-200 text-gray-700'
+                                    }`}
+                                >
+                                    {msg.content === "..." ? "Le bot est en train de répondre..." : msg.content}
+                                </div>
+                                </div>
+                            ))}
+                            </motion.div>
+                        )}
+                        </AnimatePresence>
                 </div>
 
                 {/* Formulaire d'envoi de message */}
