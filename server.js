@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 
 // Connexion BDD
-connectDB();
+//connectDB();
 
 // Middlewares
 app.use(express.json());
