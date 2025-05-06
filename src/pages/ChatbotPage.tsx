@@ -112,7 +112,7 @@ const ChatbotPage = () => {
                             <h2 className="text-3xl font-semibold mb-2">Bonjour</h2>
                             <h2 className="text-3xl font-semibold mb-2 pb-12">je suis Daryl</h2>
                             <img src="./logo_sans_texte.png" alt="Logo" className="items-center w-[20vh] h-auto pb-12" />
-                            <h2 className="text-3xl font-semibold mb-2">Comment puis-je vous aider</h2> 
+                            <h2 className="text-3xl font-semibold mb-2">Comment puis-je vous aider ?</h2> 
                             </motion.div>
                         ) : (
                             <motion.div
