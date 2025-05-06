@@ -1,29 +1,33 @@
-const Document = require('../../models/Document');
-const fs = require('fs');
+// controllers/document/read.controller.js
 
-module.exports = async (req, res) => {
-  const { id } = req.params;
+// controllers/document/read.controller.js
+const getContainerClient = require('../../utils/getContainerClient');
 
+const listDocuments = async (req, res) => {
   try {
-    const document = await Document.findById(id);
+    const containerClient = getContainerClient();
+    const files = [];
 
-    if (!document) {
-      return res.status(404).json({ error: 'Document introuvable' });
+    for await (const blob of containerClient.listBlobsFlat()) {
+      // Construire l'URL complète de chaque fichier (en fonction de ton blob storage)
+      const blobClient = containerClient.getBlobClient(blob.name);
+      const url = blobClient.url;
+      
+      // Récupérer la taille du fichier (en octets)
+      const blobProperties = await blobClient.getProperties();
+      const size = blobProperties.contentLength;
+
+      files.push({
+        name: blob.name,
+        url: url,
+        size: size
+      });
     }
 
-    const filePath = document.path;
-
-    // On vérifie que le fichier existe physiquement
-    if (!fs.existsSync(filePath)) {
-      return res.status(404).json({ error: 'Fichier manquant sur le serveur' });
-    }
-
-    res.setHeader('Content-Type', document.mimetype);
-    res.setHeader('Content-Disposition', `inline; filename="${document.originalname}"`);
-    fs.createReadStream(filePath).pipe(res);
-
-  } catch (err) {
-    console.error('Erreur lecture document :', err);
-    res.status(500).json({ error: 'Erreur serveur' });
+    res.status(200).json(files);
+  } catch (error) {
+    res.status(500).json({ error: 'Unable to retrieve documents' });
   }
 };
+
+module.exports = listDocuments;

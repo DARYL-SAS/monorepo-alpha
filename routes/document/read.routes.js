@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const readController = require('../../controllers/document/read.controller');
+const listDocuments = require('../../controllers/document/read.controller');
 
-router.get('/:id', readController);
+router.get('/', listDocuments);
 
 module.exports = router;

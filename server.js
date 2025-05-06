@@ -1,9 +1,15 @@
+// server.js
+
 require('dotenv').config(); // Importation des modules nécessaires
 const express = require('express');
+const cors = require('cors');
 const app = express();
 
-// Connexion BDD
-//connectDB();
+app.use(cors());
+
+// Connexion BlobStorage
+const connectBlob = require('./config/blob');
+connectBlob();
 
 // Middlewares
 app.use(express.json());
@@ -16,10 +22,13 @@ app.use('/project', require('./routes/project/delete.routes'));
 app.use('/project', require('./routes/project/initiate.routes'));
 
 //Document routes
-app.use('/document', require('./routes/document/input.routes'));
-app.use('/document', require('./routes/document/read.routes'));
-app.use('/document', require('./routes/document/edit.routes'));
-app.use('/document', require('./routes/document/delete.routes'));
+const inputRoutes = require('./routes/document/input.routes');
+const readRoutes = require('./routes/document/read.routes');
+const deleteRoutes = require('./routes/document/delete.routes');
+
+app.use('/document/input', inputRoutes);
+app.use('/document/read', readRoutes);
+app.use('/document/delete', deleteRoutes);
 
 // Lancement du serveur
 const PORT = process.env.PORT || 3000;

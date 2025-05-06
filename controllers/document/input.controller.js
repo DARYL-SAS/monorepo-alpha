@@ -1,4 +1,4 @@
-const getContainerClient = require('../../utils/getContainerClient'); // chemin corrigé si besoin
+const getContainerClient = require('../../utils/getContainerClient');
 const { v4: uuidv4 } = require('uuid');
 const path = require('path');
 const multer = require('multer');
@@ -18,7 +18,7 @@ const uploadDocument = (req, res) => {
 
     try {
       const containerClient = getContainerClient();
-      const blobName = `${uuidv4()}_${path.basename(req.file.originalname)}`;
+      const blobName = `${path.basename(req.file.originalname)}`;
       const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
       await blockBlobClient.uploadData(req.file.buffer, {
