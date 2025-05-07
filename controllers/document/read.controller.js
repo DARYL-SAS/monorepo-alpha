@@ -1,6 +1,4 @@
 // controllers/document/read.controller.js
-
-// controllers/document/read.controller.js
 const getContainerClient = require('../../utils/getContainerClient');
 
 const listDocuments = async (req, res) => {
@@ -8,12 +6,11 @@ const listDocuments = async (req, res) => {
     const containerClient = getContainerClient();
     const files = [];
 
+    // Liste des fichiers dans le container
     for await (const blob of containerClient.listBlobsFlat()) {
-      // Construire l'URL complète de chaque fichier (en fonction de ton blob storage)
       const blobClient = containerClient.getBlobClient(blob.name);
       const url = blobClient.url;
-      
-      // Récupérer la taille du fichier (en octets)
+
       const blobProperties = await blobClient.getProperties();
       const size = blobProperties.contentLength;
 
@@ -22,6 +19,11 @@ const listDocuments = async (req, res) => {
         url: url,
         size: size
       });
+    }
+
+    // Vérifier si des fichiers existent
+    if (files.length === 0) {
+      return res.status(404).json({ error: 'Aucun fichier trouvé' });
     }
 
     res.status(200).json(files);

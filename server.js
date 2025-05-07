@@ -28,7 +28,7 @@ const deleteRoutes = require('./routes/document/delete.routes');
 
 app.use('/document/input', inputRoutes);
 app.use('/document/read', readRoutes);
-app.use('/document/delete', deleteRoutes);
+app.use('/document', deleteRoutes);
 
 // Lancement du serveur
 const PORT = process.env.PORT || 3000;

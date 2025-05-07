@@ -18,7 +18,7 @@
   <script>
     async function fetchFiles() {
       try {
-        const res = await fetch('http://localhost:3000/document/read');  // Assure-toi que l'URL de l'API est correcte
+        const res = await fetch('http://localhost:3000/document/read'); 
         const text = await res.text();
         console.log(text);
 

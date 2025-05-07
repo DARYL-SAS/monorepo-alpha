@@ -6,6 +6,7 @@ const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() }).single('file');
 
 const uploadDocument = (req, res) => {
+  console.log("[UPLOAD] Requête reçue")
   upload(req, res, async (err) => {
     if (err) {
       console.error('Erreur Multer:', err.message);
