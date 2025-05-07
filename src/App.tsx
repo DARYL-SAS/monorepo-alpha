@@ -36,7 +36,7 @@ const App: React.FC = () => {
       <SidebarContext.Provider value={{ expanded, setExpanded }}>
         <main className="flex h-screen">
           <Sidebar>
-            <SidebarItem to="/chatbot" icon={<BotMessageSquare size={20} />} text="Chatbot" alert={false} />
+            <SidebarItem to="/" icon={<BotMessageSquare size={20} />} text="Chatbot" alert={false} />
             <SidebarItem to="/document" icon={<BookText size={20} />} text="Document" active />
           </Sidebar>
 
@@ -47,9 +47,8 @@ const App: React.FC = () => {
               className="pt-16 transition-all duration-300"
             >
               <Routes>
-                <Route path="/" element={<HomePage />} />
+                <Route path="/" element={<ChatbotPage />} />
                 <Route path="/document" element={<DocumentsPage />} />
-                <Route path="/chatbot" element={<ChatbotPage />} />
               </Routes>
             </div>
           </div>

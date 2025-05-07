@@ -16,7 +16,7 @@ export default function Topbar() {
       case "/chatbot":
         return "Assistant intelligent";
       case "/":
-        return "Accueil";
+        return "Assistant intelligent";
       default:
         return "Tableau de bord";
     }

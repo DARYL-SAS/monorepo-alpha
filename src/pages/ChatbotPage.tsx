@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ChatbotQueryInput, ChatbotQueryResponse } from '../types/chatbot.ts';
 import {SendHorizontal} from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ButtonHub from '@components/ButtonHub.tsx';
 
 const ChatbotPage = () => {
     const [prompt, setPrompt] = useState('');
@@ -83,9 +84,15 @@ const ChatbotPage = () => {
             handleSubmit(e as unknown as React.FormEvent);
         }
     };
+    
+
+    const handleButtonClick = (text: string) => {
+        setPrompt(text); // Update the input field with the button's text
+        textareaRef.current?.focus(); // Focus the input field
+    };
 
     return (
-        <div className='w-full flex flex-col items-center justify-center pb-4 px-6 min-h-screen bg-gray-100'>
+        <div className='w-full flex flex-col items-center justify-center pb-4 px-6 h-screen bg-gray-100'>
             <div 
                 className="w-full h-[80vh] flex flex-col"
                 onClick={() => {
@@ -97,7 +104,7 @@ const ChatbotPage = () => {
                 {/* Boîte de messages */}
                 <div
                     ref={messagesContainerRef}
-                    className="flex-1 overflow-y-auto mb-4 px-4 py-4 space-y-4"
+                    className="flex-1 min-h-0 overflow-y-auto px-4 py-4"
                 >
                     <AnimatePresence mode="wait">
                         {messages.length === 0 ? (
@@ -107,12 +114,17 @@ const ChatbotPage = () => {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -20 }}
                             transition={{ duration: 0.5 }}
-                            className="flex flex-col text-center items-center justify-center text-gray-500"
+                            className="flex flex-col text-center items-center justify-center text-gray-500 h-full"
                             >
-                            <h2 className="text-3xl font-semibold mb-2">Bonjour</h2>
-                            <h2 className="text-3xl font-semibold mb-2 pb-12">je suis Daryl</h2>
-                            <img src="./logo_sans_texte.png" alt="Logo" className="items-center w-[20vh] h-auto pb-12" />
-                            <h2 className="text-3xl font-semibold mb-2">Comment puis-je vous aider ?</h2> 
+
+                            <h2 className="text-2xl font-semibold mb-4">Bonjour je suis Daryl,</h2>
+                            <h3 className="text-lg mb-4">Comment puis-je vous aider ?</h3>
+                            <div className="h-[80vh] overflow-hidden flex items-center justify-center"></div>
+                            <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+                                <ButtonHub configKey="chiffrage" onClick={handleButtonClick} onButtonClick={(label) => console.log(label)}/>
+                                <ButtonHub configKey="produits" onClick={handleButtonClick} onButtonClick={(label) => console.log(label)}/>
+                                <ButtonHub configKey="conseils" onClick={handleButtonClick} onButtonClick={(label) => console.log(label)} />
+                            </div>
                             </motion.div>
                         ) : (
                             <motion.div

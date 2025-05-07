@@ -1,8 +1,8 @@
-interface ChatbotQueryInput {
+export interface ChatbotQueryInput {
     prompt: string;
 }
 
-interface ChatbotQueryResponse {
+export interface ChatbotQueryResponse {
     response: string;
     sources: string[];
     conversationId: string;
