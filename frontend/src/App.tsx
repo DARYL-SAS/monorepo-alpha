@@ -37,7 +37,7 @@ const App: React.FC = () => {
         <main className="flex h-screen">
           <Sidebar>
             <SidebarItem to="/" icon={<BotMessageSquare size={20} />} text="Chatbot" alert={false} />
-            <SidebarItem to="/document" icon={<BookText size={20} />} text="Document" active />
+            {/*<SidebarItem to="/document" icon={<BookText size={20} />} text="Document" active />*/}
           </Sidebar>
 
           <div className="flex-1 relative">

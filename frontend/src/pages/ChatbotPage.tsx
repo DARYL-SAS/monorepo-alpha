@@ -128,6 +128,36 @@ const ChatbotPage: React.FC = () => {
     return () => window.removeEventListener('keydown', listener);
   }, []);
 
+  const TypingDots: React.FC = () => (
+    <span className="inline-block gap-1">
+      <span className="dot bg-gray-400 animate-bounce" style={{ animationDelay: '0s' }}></span>
+      <span className="dot bg-gray-400 animate-bounce" style={{ animationDelay: '0.2s' }}></span>
+      <span className="dot bg-gray-400 animate-bounce" style={{ animationDelay: '0.4s' }}></span>
+      <style>
+        {`
+        .dot {
+          display: inline-block;
+          width: 0.1em;
+          height: 0.1em;
+          border-radius: 50%;
+          font-size: 2em;
+          line-height: 0.5em;
+          margin: 0 0.1em;
+          vertical-align: middle;
+        }
+        @keyframes bounce {
+          0%, 80%, 100% { transform: translateY(0); }
+          40% { transform: translateY(-0.2em); }
+        }
+        .animate-bounce {
+          animation: bounce 1.4s infinite;
+          animation-delay: 0.4s;
+        }
+      `}
+      </style>
+    </span>
+  )
+
   // ---------------------------------------------------------------------------
   // Helpers -------------------------------------------------------------------
   // ---------------------------------------------------------------------------
@@ -181,7 +211,7 @@ const ChatbotPage: React.FC = () => {
       ...messages
         .filter((m) => m.type !== 'bot' || m.content !== '...')
         .map((m) => ({
-          role: m.type === 'user' ? 'user' : 'assistant',
+          role: m.type === 'user' ? 'user' as 'user' : 'assistant' as 'assistant',
           content: m.content,
         })),
       { role: 'user', content: query },
@@ -415,7 +445,7 @@ const ChatbotPage: React.FC = () => {
                   <ButtonHub configKey="conseils" onButtonClick={handleQuickButton} />
                 </div>
               </motion.div>
-            ) : (
+            ) : ( 
               <motion.div key="messages" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col space-y-4">
                 {messages.map((msg, idx) => (
                   <div key={idx} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -435,6 +465,8 @@ const ChatbotPage: React.FC = () => {
 
                       {msg.content === ''
                         ? 'Daryl est en train de répondre...'
+                        : msg.content === '...'
+                        ? <TypingDots />
                         : msg.type === 'bot'
                         ? <MarkdownBlock>{msg.content}</MarkdownBlock>
                         : msg.content}
