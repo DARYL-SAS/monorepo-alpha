@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Fichiers Azure Blob</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    ul { list-style: none; padding: 0; }
+    li { margin-bottom: 10px; }
+    a { color: #007bff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1>Liste des fichiers sur Azure Blob</h1>
+  <ul id="fileList"></ul>
+
+  <script>
+    async function fetchFiles() {
+      try {
+        const res = await fetch('http://localhost:3000/document/read'); 
+        const text = await res.text();
+        console.log(text);
+
+
+        const files = JSON.parse(text);
+
+        const list = document.getElementById('fileList');
+        files.forEach(file => {
+          const li = document.createElement('li');
+          li.innerHTML = `<a href="${file.url}" target="_blank">${file.name}</a> (${(file.size / 1024).toFixed(2)} KB)`;
+          list.appendChild(li);
+        });
+      } catch (err) {
+        console.error('Erreur chargement fichiers :', err);
+      }
+    }
+
+    fetchFiles();
+  </script>
+</body>
+</html>
