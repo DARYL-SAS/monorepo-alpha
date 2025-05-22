@@ -39,7 +39,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
           app_location: "frontend"
-          api_location: ""         # ← tu n'utilises pas Azure Functions ici
+          api_location: "ai"
           output_location: "dist"
 
   close_pull_request_job:
