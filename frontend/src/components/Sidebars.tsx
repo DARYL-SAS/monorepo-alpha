@@ -71,7 +71,7 @@ interface SidebarItemProps {
   alert?: boolean;
 }
 
-export function SidebarItem({ to, icon, text, active, alert }: SidebarItemProps) {
+export function SidebarItem({ to, icon, text, alert }: SidebarItemProps) {
   const context = useContext(SidebarContext);
 
   if (!context) {

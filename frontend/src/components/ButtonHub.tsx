@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import SecondaryButton from './SecondaryButton';
 import { useButtonConfig } from '../hooks/useButtonConfig';
 import { useDeviceDetect } from '../hooks/useDeviceDetect';
-import { CheckCircle as CircleCheck } from 'lucide-react';
-import { label } from 'framer-motion/client';
 
 interface ButtonHubProps {
   configKey: 'chiffrage' | 'produits' | 'conseils';
@@ -15,7 +13,7 @@ interface ButtonHubProps {
   const ButtonHub: React.FC<ButtonHubProps> = ({ configKey, onButtonClick, onClick }) => {
   const [expanded, setExpanded] = useState(false);
   const [activeButton, setActiveButton] = useState<string | null>(null);
-  const [touchStartPos, setTouchStartPos] = useState({ x: 0, y: 0 });
+  const [ setTouchStartPos] = useState({ x: 0, y: 0 });
   const [progress, setProgress] = useState(100);
   const { config } = useButtonConfig(configKey);
   const { isMobile } = useDeviceDetect();

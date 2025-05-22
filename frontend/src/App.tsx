@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { BotMessageSquare } from "lucide-react";
 
-/* Pagesm */
+/* Pages */
 import ChatbotPage from "./pages/ChatbotPage";
 import DocumentsPage from "./pages/DocumentsPage";
 

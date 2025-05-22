@@ -1,12 +1,8 @@
 import { useLocation } from "react-router-dom";
-import { SidebarContext } from "./Sidebars";
-import { useContext } from "react";
 import {LogOut} from "lucide-react";
 
 export default function Topbar() {
   const location = useLocation();
-  const context = useContext(SidebarContext);
-  const expanded = context?.expanded;
 
   // Titre dynamique en fonction du chemin
   const getPageTitle = () => {
