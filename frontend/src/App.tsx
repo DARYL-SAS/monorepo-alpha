@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { BookText, BotMessageSquare } from "lucide-react";
+import { BotMessageSquare } from "lucide-react";
 
-/* Pages */
+/* Pagesm */
 import ChatbotPage from "./pages/ChatbotPage";
 import DocumentsPage from "./pages/DocumentsPage";
 
@@ -11,14 +11,6 @@ import Topbar from "@components/Topbar";
 import Sidebar, {SidebarContext, SidebarItem} from "@components/Sidebars";
 import SplashScreen from "@components/SplashScreen";
 
-const HomePage = () => {
-  return (
-    <div>
-      <h1>Welcome to the Dashboard</h1>
-      <p>This is the home page.</p>
-    </div>
-  );
-};
 
 const App: React.FC = () => {
   const [expanded, setExpanded] = useState(true);
