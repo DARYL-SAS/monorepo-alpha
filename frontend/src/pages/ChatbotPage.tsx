@@ -72,14 +72,11 @@ const MarkdownBlock: React.FC<{ children: string }> = ({ children }) => (
         ul: ({ node, ...props }) => <ul className="list-disc pl-5 my-2" {...props} />,
         ol: ({ node, ...props }) => <ol className="list-decimal pl-5 my-2" {...props} />,
         li: ({ node, ...props }) => <li className="mb-1" {...props} />,
-        code: ({ node, inline, ...props }) =>
-          inline ? (
-            <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono" {...props} />
-          ) : (
+        code: ({ node, ...props }) =>
+          
             <pre className="bg-gray-100 p-3 rounded overflow-auto my-2">
               <code className="text-sm font-mono" {...props} />
             </pre>
-          ),
       }}
     >
       {children}
