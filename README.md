@@ -5,6 +5,6 @@ monorepo-daryl/
 ├── backend/ # API (Express, dotenv, multer, uuid, cors)
 ├── ia/ # Scripts et modèles IA
 
-Chaque dossier est **autonome**, avec ses propres dépendances, outils, tests et environnement.
+Chaque dossier est **autonome**, avec ses pro²pres dépendances, outils, tests et environnement.
 
 la
