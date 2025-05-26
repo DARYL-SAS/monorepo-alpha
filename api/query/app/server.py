@@ -1,3 +1,5 @@
+import azure.functions as func
+
 from fastapi import FastAPI
 from pydantic import BaseModel
 from langchain_core.messages import HumanMessage
