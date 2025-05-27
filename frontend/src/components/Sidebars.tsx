@@ -47,14 +47,14 @@ export default function Sidebar({ children }: SidebarProps) {
         {/* User profile and settings */}
         <div className={`w-full flex items-center border-t p-3 bg-white transition-all duration-300 ${expanded ? "flex-row" : "flex-col items-center"}`}>
           <img
-            src="https://ui-avatars.com/api/?background=c7d2fe&color=3730a3&bold=true"
+            src="frontend/public/DeltaSud-1024x825.jpg"
             alt=""
             className="w-10 h-10 rounded-md"
           />
           {expanded && (
             <div className="flex flex-col justify-center ml-3 overflow-hidden max-w-[9rem]">
-              <h4 className="font-semibold text-sm truncate">John Doe</h4>
-              <span className="text-xs text-gray-600 truncate">johndoe@gmail.com</span>
+              <h4 className="font-semibold text-sm truncate">Delta Sud</h4>
+              <span className="text-xs text-gray-600 truncate">contact@deltasud.com</span>
             </div>
           )}
         </div>
